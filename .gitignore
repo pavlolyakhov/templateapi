@@ -1,0 +1,6 @@
+/node_modules
+config.js
+TemplateApi.sln
+TemplateApi.njsproj
+package-lock.json
+.vs/TemplateApi/v15/.suo
