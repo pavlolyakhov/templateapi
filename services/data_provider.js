@@ -23,7 +23,7 @@ function dataProvider() {
                         const payloadObject = { usableObj };
                         resolve(payloadObject);
                     }
-                    else {                  // no more products in db, get from tesco
+                    else {                                                      // no more products in db, get from tesco
                         console.log("not found in db");
 
                         const { searchText, searchOffset, searchTake } = data;
@@ -34,12 +34,10 @@ function dataProvider() {
                             .then(async function (response) {
                                 const results = response.data.uk.ghs.products.results;          // array
                                 console.log(results);
-                                //async await here
                                 const foundProducts = await getProductDetails(results, res);
                                 console.log('foundProducts');
                                 console.log(foundProducts);
                                 return foundProducts;
-                                //res.send(results);
                             })
 
                             .then((foundProducts) => {
@@ -53,25 +51,15 @@ function dataProvider() {
                                 resolve(results);
                             })
                             .catch(e => {
-                                debugger;
                                 console.log("Error getting usable products")
                                 console.log(e);
                                 reject(e)
                             });
                     }
                 }).catch(e => {
-                    debugger;
                     reject("reject whole request");
                 });
         })
     }
 }
-
-
 module.exports = new dataProvider();
-
-// return {products : [
-                //    {[id] : { generic : generic, details: details  }},
-                //    {[id] : { generic : generic, details: details  }},
-                //    {[id] : { generic : generic, details: details  }},
-                //]}

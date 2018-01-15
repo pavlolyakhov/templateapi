@@ -9,8 +9,7 @@ const cors = require('cors');
 const config = require('./config');
 
 //DB setup
-
-const ftr_users = config.dbConnectionString;// 'mongodb://pavl1:Mytestdb1@ds131546.mlab.com:31546/ftr_users';    //mongoose.connect('mongodb://localhost:27017/auth');
+const ftr_users = config.dbConnectionString;                                            //mongoose.connect('mongodb://localhost:27017/auth');
 var promise = mongoose.connect(ftr_users, {
   useMongoClient : true
 });
@@ -18,8 +17,7 @@ var promise = mongoose.connect(ftr_users, {
 // App setup
 app.use(morgan('combined'));
 app.use(cors({credentials: true, origin: true}));
-app.use(bodyParser.json({type: '*/*'}));
-//app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json({type: '*/*'}));                                                //app.use(bodyParser.urlencoded({ extended: true }));
 router(app);
 
 //Server setup

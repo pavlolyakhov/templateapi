@@ -2,7 +2,6 @@
 
 
 exports.getGuestId = function (req, res, next) {
-        //const newId = ObjectID();
         const newGuest = new Guest();
         newGuest.save(function (err, results) {
             if (err) {
@@ -11,7 +10,6 @@ exports.getGuestId = function (req, res, next) {
                 return res.status(404).send(err);
             }
             console.log(results._id);
-            //res.json({ guestId: results._id });
             res.send({ newGuestID: results._id });
         })
 }

@@ -1,6 +1,7 @@
 ﻿const _ = require('lodash');
 const Product = require('../models/product');
 const ProductDetail = require('../models/productDetail');
+const { ObjectID } = require('mongodb');
 const axios = require('axios');
 const config = require('../config');
 const tescoProductDataApi = config.tescoProductDataApiUrl;
@@ -19,7 +20,6 @@ exports.getProductDetails = function (productsArray, res, next) {
     return new Promise(function (resolve, reject) {
         const waitingArr = [];
         productsArray.forEach((item, i) => {
-            //setTimeout(function () {
                 console.log("get details with delay");
             const tpnb = item.tpnb;
             const getProductDataRequest = `${tescoProductDataApi}tpnb=${tpnb}`;    //const TESCO_PRODUCT_API = `https://dev.tescolabs.com/product/?tpnb=${tpnb}`;
@@ -95,7 +95,6 @@ exports.getProductDetails = function (productsArray, res, next) {
                         console.log(error); 
                         reject(error)
                     });
-            //}, 3000);
         });      // for each
     })           // promise
 }
@@ -115,15 +114,6 @@ exports.getProductFromDb = function (data) {
                 resolve(docs);
             })
         });
-        //ProductDetail.find({ 'name': { $regex: new RegExp("^" + searchText, "i") } }, function (err, docs) {
-        //    debugger;
-        //    if (err) {
-        //        reject('find product in db failed');
-        //    }
-        //    docs.
-        //    console.log(docs);
-        //    resolve(docs);
-        //});
     };
 
 
@@ -152,7 +142,6 @@ exports.saveUsableProductDetails = function (foundProducts) {
 
 exports.findUsableProducts = function (found) {
     try {
-        //debugger;
         const unusableIndexes = found[0], usableResults = found[1];
         unusableIndexes.sort();
         for (let y = unusableIndexes.length - 1; y >= 0; y--) {
@@ -169,53 +158,3 @@ exports.findUsableProducts = function (found) {
         throw new Error("Error converting to usable object");
     }
 }
-
-
-//exports.findUsableProducts = function (found) {
-//    return new Promise((resolve, reject) => {
-//        try {
-
-//            const unusableIndexes = found[0], usableResults = found[1];
-//            unusableIndexes.sort();
-//            for (let y = unusableIndexes.length - 1; y >= 0; y--) {
-//                usableResults.splice(unusableIndexes[y], 1);
-//            }
-//            const usableObj = {};
-//            usableResults.reduce(function (previousValue, currentValue) {
-//                usableObj[currentValue.id] = currentValue;
-//            }, usableObj);
-//            //const payloadObject = { usableObj, searchText, searchOffset }
-//            const payloadObject = { usableObj };
-//            resolve(payloadObject);
-//        }
-//        catch (e) {
-//            reject('findUsableProducts failed');
-//        }
-//    });
-//}
-
-//function cacheResults(usableObj) {
-//    ProductDetail.findOne({ id: id }, function (err, existingProduct) {
-//        if (err) {
-//            console.log('error', err);
-//            console.log('next function', next);
-//            //return next(err);
-//            //return;
-//        }
-//        if (existingProduct) {
-//            console.log('existingProduct', existingProduct);
-//            return ;
-//        }
-//        const productDetail = new ProductDetail(data);
-
-//        productDetail.save(function (err) {
-//            if (err) {
-//                console.log('productDetail save error', err);
-//                //  return next(err);
-//                return;
-//            }
-//            console.log("productDetail Saved");
-//            return;
-//        });
-//    });
-//}
